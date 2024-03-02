@@ -6,4 +6,3 @@ def uppercase_string(chain):
 lista_mayuscula = list(map(uppercase_string,cadenas))
 
 print(lista_mayuscula)
-print("hol")
