@@ -41,10 +41,12 @@ def crear_articulo(nombre,inventario,area):
     articulo = Item(str(len(inventario)).zfill(4),nombre,area)
     inventario.append(articulo.estante)
     articulo.archivar()
-      
+ 
+def retirar_objecto(seleccion,inventario):
+    inventario[seleccion].pop(seleccion)     
     
 def pantalla(lista_almacenes,inventario):
-     # muestra el menz de llos almacenes
+     #muestra el mene de los almacenesf
 
     print("ID","Nombre".center(33),"Capacidad disponible")
     print("".center(59,"-")) # aqui se agrega "-" para que tenfa una apariencia mejor
@@ -75,8 +77,6 @@ def pantalla_de_inventario(inventario):
         
         elegir_elemtnos_de_lista = inventario[i]
         print(elegir_elemtnos_de_lista[0],elegir_elemtnos_de_lista[1].center(30),elegir_elemtnos_de_lista[2].center(12))
-        
-    
     
     
 lista_almacenes = []  # aqui se guardan los almacenes    
@@ -119,13 +119,14 @@ while True:
                 #aqui se mostrarala lista de los almacenes para que el usuario ingrese dentro y vea los item adentro
                 pantalla(lista_almacenes,inventario_de_almacen)
                 selecciona_almacen = (input("\nElija el almacen o escriba \"-exict\" para salir: "))
+                os.system("clear")
                 if selecciona_almacen == "-exict":
                     break
-                os.system("clear")
+                
                 #aqui se tiene que mostrar el inventario
                 pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
-                
-                opciones_invetario = int(input("1.Salir 2.Agregar objecto\nElija: "))
+                os.system("clear")
+                opciones_invetario = int(input("1.Salir 2.Agregar objecto 3.Retirar objecto\nElija: "))
                 os.system("clear")
                 
                 if opciones_invetario == 1:
@@ -138,15 +139,23 @@ while True:
                         
                         pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
                         nombre = input("\nEscriba  \"-exict\" para salir \nIngrese el nombre del objecto: ")
-                        
+                       
                         if nombre == "-exict":
                             os.system("clear")
                             break
                            
                         area_objecto = int(input("Ingrese el valor de area del objecto: "))
-                        
-                        crear_articulo(nombre,inventario_de_almacen[int(selecciona_almacen)],area_objecto)
                         os.system("clear")
+                        crear_articulo(nombre,inventario_de_almacen[int(selecciona_almacen)],area_objecto)
+                        
+                        
+                elif opciones_invetario == 3:
+                    pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
+                    retirar = int(input("Ingese el id del objeto: "))
+                    retirar_objecto(retirar,inventario_de_almacen)
+                    os.system("clear")
+                    break
+                    
                 else:
                     os.system("clear")
                     print("Esa opcion no existe")
