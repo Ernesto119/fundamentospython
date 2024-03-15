@@ -41,36 +41,32 @@ def crear_articulo(nombre,inventario,area):
     articulo = Item(str(len(inventario)).zfill(4),nombre,area)
     inventario.append(articulo.estante)
     articulo.archivar()
+    
  
 def retirar_objecto(seleccion,inventario):
-    inventario[seleccion].pop(seleccion)     
+    inventario[seleccion].pop(seleccion)   
+      
     
 def pantalla(lista_almacenes,inventario):
      #muestra el mene de los almacenesf
 
     print("ID","Nombre".center(33),"Capacidad disponible")
     print("".center(59,"-")) # aqui se agrega "-" para que tenfa una apariencia mejor
-    estante = inventario[0]
-    descatar = 0
-    for est in estante:#calcular la suma del area de todos los objeto dentro del almacen para restacelo luego a "disponible"
-        for lista in est:
-            if len(lista)>= 3:
-                descatar += int(est[2])
-        
     for i in range(len(lista_almacenes)):
+        almacen = lista_almacenes[i]
+        espacio_ocupado = 0
+        for item in inventario[i]:
+            
+            if len(item) >= 3:
+                espacio_ocupado += int(item[2])  # Suma el área de cada artículo
+        espacio_disponible = int(almacen[2]) - espacio_ocupado  # Calcula el espacio disponible restando el área ocupada del área total
+        print(almacen[0], almacen[1].center(30), f"{espacio_disponible}/{almacen[2]}".center(21))
         
-        # los ellemento de la listas selecionado se van a separar de esta manera
-        elegir_elemetnos_de_lista = lista_almacenes[i]#espacio total
-        disponible = elegir_elemetnos_de_lista[2]# esto sirve par que sea el espacion disponible
-        print(elegir_elemetnos_de_lista[0],elegir_elemetnos_de_lista[1].center(30),f"{int(disponible)-descatar}/{elegir_elemetnos_de_lista[2]}".center(21))
-        
- #cambia esta funcion       
+   
 def pantalla_de_inventario(inventario):
-    #muestra la pantala de los item en los almacenes
     
     print("ID","Nombre".center(33),"Area del articulo")
     print("".center(59,"-"))
-    # aqui se agrega "-" para que tenfa una apariencia mejor
     for i in range(len(inventario)):
         
         # los ellemento de la listas selecionado se van a separar de esta manera
@@ -86,7 +82,7 @@ inventario_de_almacen = []# aqui se guardan los objeto de cada almacen
 while True:
     print("1.Registrar almacen","\n2.ver almacenes","\n3.Acceder al almacen","\n4.Salir")
     opcion = input("Ingrese una opcion: ")
-    os.system("clear")
+    os.system('cls' if os.name == 'nt' else 'clear')
     if opcion == "1":
         while True:
             
@@ -97,11 +93,10 @@ while True:
                 anchura= int(input("Ingrese la anchura: "))
                 largura= int(input("Ingre la largura: "))
                 crear_almacen(nombre_del_almacen,altura,anchura,largura,lista_almacenes,inventario_de_almacen)
-                os.system("clear")
+                os.system('cls' if os.name == 'nt' else 'clear')
                 break
             except:
-                
-                os.system("clear")
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("Ingrese numeros enteros en las medidas")
                 
     elif opcion =="2":
@@ -109,25 +104,25 @@ while True:
        
         pantalla(lista_almacenes,inventario_de_almacen)
         input()
-        os.system("clear")
+        os.system('cls' if os.name == 'nt' else 'clear')
         
         
     elif opcion == "3":
         
         while True:
             try:   
-                #aqui se mostrarala lista de los almacenes para que el usuario ingrese dentro y vea los item adentro
+                
                 pantalla(lista_almacenes,inventario_de_almacen)
                 selecciona_almacen = (input("\nElija el almacen o escriba \"-exict\" para salir: "))
-                os.system("clear")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                
                 if selecciona_almacen == "-exict":
                     break
                 
-                #aqui se tiene que mostrar el inventario
+                
                 pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
-                os.system("clear")
                 opciones_invetario = int(input("1.Salir 2.Agregar objecto 3.Retirar objecto\nElija: "))
-                os.system("clear")
+                os.system('cls' if os.name == 'nt' else 'clear')
                 
                 if opciones_invetario == 1:
                     
@@ -141,32 +136,36 @@ while True:
                         nombre = input("\nEscriba  \"-exict\" para salir \nIngrese el nombre del objecto: ")
                        
                         if nombre == "-exict":
-                            os.system("clear")
+                            
+                            os.system('cls' if os.name == 'nt' else 'clear')
                             break
                            
                         area_objecto = int(input("Ingrese el valor de area del objecto: "))
-                        os.system("clear")
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         crear_articulo(nombre,inventario_de_almacen[int(selecciona_almacen)],area_objecto)
                         
                         
                 elif opciones_invetario == 3:
+                    
                     pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
                     retirar = int(input("Ingese el id del objeto: "))
                     retirar_objecto(retirar,inventario_de_almacen)
-                    os.system("clear")
+                    
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     break
                     
                 else:
-                    os.system("clear")
-                    print("Esa opcion no existe")
                     
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("Esa opcion no existe")  
             except:
-                print("Error")
+                print("Error opcion invalidad")
                 
     elif opcion == "4":
+        
         break
     
     else:
         print("Esa opcion no existe")
     
-print("bye")
+print("Gracias por usar el sistema")
