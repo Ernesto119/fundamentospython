@@ -47,11 +47,10 @@ def retirar_objecto(seleccion,inventario):
     inventario[seleccion].pop(seleccion)   
       
     
-def pantalla(lista_almacenes,inventario):
-     #muestra el mene de los almacenesf
+def pantalla(lista_almacenes, inventario):
+    print("ID", "Nombre".center(33), "Capacidad disponible")
+    print("".center(59, "-"))
 
-    print("ID","Nombre".center(33),"Capacidad disponible")
-    print("".center(59,"-")) # aqui se agrega "-" para que tenfa una apariencia mejor
     for i in range(len(lista_almacenes)):
         almacen = lista_almacenes[i]
         espacio_ocupado = 0
@@ -61,8 +60,7 @@ def pantalla(lista_almacenes,inventario):
                 espacio_ocupado += int(item[2])  # Suma el área de cada artículo
         espacio_disponible = int(almacen[2]) - espacio_ocupado  # Calcula el espacio disponible restando el área ocupada del área total
         print(almacen[0], almacen[1].center(30), f"{espacio_disponible}/{almacen[2]}".center(21))
-        
-   
+
 def pantalla_de_inventario(inventario):
     
     print("ID","Nombre".center(33),"Area del articulo")
@@ -129,22 +127,25 @@ while True:
                     break
                 
                 elif opciones_invetario == 2:
+                    espacio_disponible = int(lista_almacenes[int(selecciona_almacen)][2]) - sum(int(item[2]) for item in inventario_de_almacen[int(selecciona_almacen)] if len(item) >= 3)
+                    if espacio_disponible <= 0:
+                        print("El almacén está lleno. No se pueden agregar más objetos.")
+                    else:
                     
-                    while True:
+                        while True:
                         
-                        pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
-                        nombre = input("\nEscriba  \"-exict\" para salir \nIngrese el nombre del objecto: ")
-                       
-                        if nombre == "-exict":
-                            
-                            os.system('cls' if os.name == 'nt' else 'clear')
-                            break
-                           
-                        area_objecto = int(input("Ingrese el valor de area del objecto: "))
-                        os.system('cls' if os.name == 'nt' else 'clear')
-                        crear_articulo(nombre,inventario_de_almacen[int(selecciona_almacen)],area_objecto)
-                        
-                        
+                            pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
+                            nombre = input("\nEscriba  \"-exict\" para salir \nIngrese el nombre del objecto: ")
+                            if nombre == "-exict":
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                                break
+                            area_objeto = int(input("Ingrese el valor de área del objeto: "))
+                            if area_objeto <= espacio_disponible:  # Verificar si el área del objeto es menor o igual al espacio disponible
+                                crear_articulo(nombre, inventario_de_almacen[int(selecciona_almacen)], area_objeto)
+                                os.system('cls' if os.name == 'nt' else 'clear')
+                                break
+                            else:
+                                print("El área del objeto es mayor que el espacio disponible en el almacén. Ingrese un valor menor.")                 
                 elif opciones_invetario == 3:
                     
                     pantalla_de_inventario(inventario_de_almacen[int(selecciona_almacen)])
@@ -155,7 +156,6 @@ while True:
                     break
                     
                 else:
-                    
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Esa opcion no existe")  
             except:

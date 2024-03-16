@@ -6,6 +6,4 @@ def filter_names_starting_with_a(nombre):
 
 nombres = list(input("Ingrese nombres seoarados por coma:").split(","))
 
-
-
 print(filter_names_starting_with_a(nombres))
