@@ -1,2 +1,5 @@
 sistema de almacenes/funciones/__pycache__
 __pycache__
+.pytest_cache
+env
+test
