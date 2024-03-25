@@ -1,25 +1,23 @@
-
-
 class Almacen:
-    def __init__(self,idalmacen,nombre,altura,largura,anchura,):
-        self.idamalcen = idalmacen
+    def __init__(self,uid,nombre,altura,largura,anchura):
+        self.uid = uid
         self.nombre = nombre
         self.capacidad = altura*largura*anchura
         self.inventario = []
     def insetar(self):
-        return [self.idamalcen, self.nombre, self.capacidad] 
+        return [self.uid, self.nombre, self.capacidad] 
     
-
-class Articulo:
-    def __init__(self,idarticulo,nombre,area):
-        self.idarticulo = idarticulo
-        self.nombre = nombre
+    
+    
+class Articulo(Almacen):
+    def __init__(self,uid,nombre,area):
+        super().__init__(uid,nombre,0,0,0)
         self.area = area
     def insetar(self):
-        return [self.idarticulo, self.nombre, self.area]
+        return [self.uid,self.nombre,self.area]
+  
     
-            
-
+    
 def pantalla_almacenes(almacenes,inventario):
     print('ID','Nombre'.center(44),'Capacidad disponible')
     print('-'*70)
