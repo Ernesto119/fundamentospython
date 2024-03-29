@@ -1,10 +1,8 @@
 """Sistema de almacense con clases en python"""
 
 
-from modulos import Almacen, Articulo, pantalla_almacenes, pantalla_inventario
+from sistema.modulos import Almacen, Articulo, pantalla_almacenes, pantalla_inventario
 import os
-
-
 
 
 
